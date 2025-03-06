@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { MapPin, Clock, DollarSign } from "lucide-react"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function JobPostItem({ job, onEdit, onDelete }: any) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [editedJob, setEditedJob] = useState(job)

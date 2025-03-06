@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -59,7 +60,7 @@ const jobDetails = {
   views: 27,
 }
 
-export default function JobDetailsPage({ params }) {
+export default function JobDetailsPage() {
   const router = useRouter()
   // In a real application, you would fetch the job details based on the ID
   // const { id } = params
@@ -356,7 +357,7 @@ export default function JobDetailsPage({ params }) {
   )
 }
 
-function SimilarJobItem({ title, location, rate }) {
+function SimilarJobItem({ title, location, rate }: any) {
   return (
     <div className="border-b pb-3 last:border-0">
       <h4 className="font-medium">{title}</h4>
