@@ -43,11 +43,11 @@ const initialJobPosts = [
 export default function ProfilePage() {
   const [jobPosts, setJobPosts] = useState(initialJobPosts)
 
-  const handleEditJob = (editedJob) => {
+  const handleEditJob = (editedJob: any) => {
     setJobPosts(jobPosts.map((job) => (job.id === editedJob.id ? editedJob : job)))
   }
 
-  const handleDeleteJob = (jobId) => {
+  const handleDeleteJob = (jobId: any) => {
     setJobPosts(jobPosts.filter((job) => job.id !== jobId))
   }
 

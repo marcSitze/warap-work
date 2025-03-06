@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { MapPin, Clock, DollarSign } from "lucide-react"
 
-export function JobPostItem({ job, onEdit, onDelete }) {
+export function JobPostItem({ job, onEdit, onDelete }: any) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [editedJob, setEditedJob] = useState(job)
 
@@ -64,7 +64,7 @@ export function JobPostItem({ job, onEdit, onDelete }) {
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Edit Job Post</DialogTitle>
-              <DialogDescription>Make changes to your job post here. Click save when you're done.</DialogDescription>
+              <DialogDescription>Make changes to your job post here. Click save when you&apos;re done.</DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
