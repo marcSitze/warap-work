@@ -1,33 +1,26 @@
 "use client"
 
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import Link from "next/link"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { AUTH_TOKEN } from "@/constants/local-storage-keys"
+import { useState } from "react"
+import { getLocalStorageItem } from "../utils/local-storage"
+import { useRouter } from "next/navigation"
+import { LOGIN } from "@/constants/routes"
 
 export default function PostJobPage() {
-  const [jobType, setJobType] = useState("one-time")
+  const [jobType, setJobType] = useState("one-time");
+  const token = getLocalStorageItem(AUTH_TOKEN);
+  const router = useRouter();
+  if (!token) return router.push(`/${LOGIN}`)
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            SmallJobs
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/login">
-              <Button variant="outline">Login</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
       <main className="container mx-auto px-4 py-8">
         <Card className="max-w-2xl mx-auto">
           <CardHeader>
@@ -124,12 +117,6 @@ export default function PostJobPage() {
           </CardFooter>
         </Card>
       </main>
-
-      <footer className="bg-muted mt-16 py-12">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} SmallJobs. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   )
 }
