@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { Search, MapPin, Clock, Briefcase } from "lucide-react"
-import Link from "next/link"
-import { jobOffers } from "@/mock/services"
-import { useGetServiceCategories, useGetServicesRequestsList } from "./api/hooks/queries"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Clock, MapPin, Search } from "lucide-react";
+import Link from "next/link";
+import { useGetServiceCategories, useGetServicesRequestsList } from "./api/hooks/queries";
+import { ServiceRequest } from "./types/services";
 
 export default function LandingPage() {
   const { data } = useGetServicesRequestsList();
   const { data: categories } = useGetServiceCategories();
-  console.log("data: ", data);
+  console.log("data: ", data?.requests);
   console.log("categories: ", categories);
 
   return (
@@ -85,8 +84,8 @@ export default function LandingPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {jobOffers.map((job) => (
-            <JobCard key={job.id} job={job} />
+          {data?.requests?.map((job) => (
+            <JobCard key={job?.uuid} job={job} />
           ))}
         </div>
 
@@ -100,13 +99,13 @@ export default function LandingPage() {
   )
 }
 
-function JobCard({ job }: any) {
+function JobCard({ job }: {job: ServiceRequest}) {
   return (
     <div className="bg-card border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
       <div className="p-6">
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl font-semibold">{job.title}</h3>
-          <Badge
+          {/* <Badge
             variant={
               job.type === "One-time"
                 ? "default"
@@ -118,30 +117,30 @@ function JobCard({ job }: any) {
             }
           >
             {job.type}
-          </Badge>
+          </Badge> */}
         </div>
 
         <div className="flex items-center text-muted-foreground mb-2">
           <MapPin className="h-4 w-4 mr-1" />
-          <span className="text-sm">{job.location}</span>
+          <span className="text-sm">{job?.district}</span>
         </div>
 
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center text-muted-foreground">
             <Clock className="h-4 w-4 mr-1" />
-            <span className="text-sm">{job.postedTime}</span>
+            <span className="text-sm">{job?.created_at}</span>
           </div>
-          <div className="font-medium text-primary">{job.rate}</div>
+          <div className="font-medium text-primary">{job?.fixed_amount}</div>
         </div>
 
-        <p className="text-muted-foreground mb-4 line-clamp-2">{job.description}</p>
+        <p className="text-muted-foreground mb-4 line-clamp-2">{job?.description}</p>
 
         <div className="flex items-center justify-between">
-          <Badge variant="outline" className="bg-primary/10">
+          {/* <Badge variant="outline" className="bg-primary/10">
             <Briefcase className="h-3 w-3 mr-1" />
             {job.category}
-          </Badge>
-          <Link href={`/jobs/${job.id}`}>
+          </Badge> */}
+          <Link href={`/jobs/${job.uuid}`}>
             <Button variant="outline" size="sm">
               View Details
             </Button>

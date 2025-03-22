@@ -21,6 +21,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useGetServiceRequest } from "@/app/api/hooks/queries"
 
 // Extended mock data for a single job with more details
 const jobDetails = {
@@ -62,6 +63,7 @@ const jobDetails = {
 
 export default function JobDetailsPage() {
   const router = useRouter()
+  const { data } = useGetServiceRequest();
   // In a real application, you would fetch the job details based on the ID
   // const { id } = params
   // const [job, setJob] = useState(null)
@@ -71,22 +73,6 @@ export default function JobDetailsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            SmallJobs
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/post-job">
-              <Button>Post a Job</Button>
-            </Link>
-            <Link href="/login">
-              <Button variant="outline">Login</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
       <main className="container mx-auto px-4 py-8">
         <Button variant="ghost" className="mb-6 pl-0" onClick={() => router.back()}>
           <ArrowLeft className="mr-2 h-4 w-4" />

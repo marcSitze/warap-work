@@ -5,10 +5,18 @@ import { useQuery } from '@tanstack/react-query'
 
 const dataProvider = createDataProvider();
 
+type PaginatedResponse<T> = {
+  page?: number;
+  size?: number;
+  total?: number;
+  more?: boolean;
+  requests?: T[]
+}
+
 const useGetServicesRequestsList = () => {
   const query = useQuery({
     queryKey: [SERVICES_REQUESTS_LIST],
-    queryFn: () => dataProvider.get<ServiceRequest[]>("/services/requests/list")
+    queryFn: () => dataProvider.get<PaginatedResponse<ServiceRequest>>("/services/requests/list")
   })
 
   return query

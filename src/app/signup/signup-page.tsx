@@ -57,6 +57,11 @@ export default function SignupPage() {
               {errors.city && <p className="text-red-500 text-sm">{errors.city?.message}</p>}
             </div>
             <div className="space-y-2">
+              <Label htmlFor="phone">Phone</Label>
+              <Input id="phone" placeholder="phone" {...register("phone", { required: "phone is required" })} />
+              {errors.phone && <p className="text-red-500 text-sm">{errors.phone?.message}</p>}
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="district">District</Label>
               <Input id="district" placeholder="District" {...register("district", { required: "District is required" })} />
               {errors.district && <p className="text-red-500 text-sm">{errors.district?.message}</p>}
