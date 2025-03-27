@@ -1,3 +1,5 @@
+import { ServiceProposal, ServiceRequest } from "./services";
+
 export type UserDTO = {
   first_name: string;
   last_name: string;
@@ -21,4 +23,9 @@ export type User = {
   is_verified:	string;
   created_at?:	string;
   updated_at?:	string;
+}
+
+export type RichUser = User & {
+  requests: ServiceRequest[],
+  proposals: ServiceProposal[]
 }

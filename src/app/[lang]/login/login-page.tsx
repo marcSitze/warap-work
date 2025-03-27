@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useLoginMutation } from "../api/hooks/mutations";
+import { useLoginMutation } from "../../api/hooks/mutations";
 
 type LoginFormValues = {
   email: string;

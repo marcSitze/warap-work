@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { useRegisterUser } from "../api/hooks/mutations"
+import { useRegisterUser } from "../../api/hooks/mutations"
 import { LOGIN } from "@/constants/routes"
-import { UserDTO } from "../types/users"
+import { UserDTO } from "../../types/users"
 
 export default function SignupPage() {
   const { mutate } = useRegisterUser();
