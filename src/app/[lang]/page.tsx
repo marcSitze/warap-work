@@ -15,10 +15,12 @@ import {
   useGetServicesRequestsList,
 } from "../api/hooks/queries";
 import { ServiceRequest } from "../types/services";
+import { useState } from "react";
 
 export default function LandingPage() {
   const { data } = useGetServicesRequestsList();
   const { data: categories } = useGetServiceCategories();
+  const [searchText, setSearchText] = useState("");
 
   return (
     <main className="container mx-auto px-4 py-8">
@@ -37,7 +39,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input placeholder="Search jobs..." className="pl-10" />
+              <Input onChange={e => setSearchText(e.target.value)} placeholder="Search jobs..." className="pl-10" />
             </div>
             <div className="w-full">
               <Select>
@@ -97,7 +99,7 @@ export default function LandingPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data?.requests?.map((job) => (
+          {data?.requests?.filter(item => item.title.toLowerCase().includes(searchText)).map((job) => (
             <JobCard key={job?.uuid} job={job} />
           ))}
         </div>
