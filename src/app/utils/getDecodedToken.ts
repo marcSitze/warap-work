@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode"
 import { getLocalStorageItem } from "./local-storage"
 
 const token = getLocalStorageItem(AUTH_TOKEN) || ""
+console.log({ token })
 
 type TokenUser = {
   user_id: string,
@@ -13,8 +14,9 @@ type TokenUser = {
   phone: string
 }
 const getDecodedToken = () => {
+  if (!token) return undefined;
   const decoded = jwtDecode<Partial<TokenUser>>(token);
-
+  if (!decoded) return undefined;
   return decoded;
 }
 

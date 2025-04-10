@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { type getDictionary, LocaleType } from "@/app/dictionaries";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,14 +11,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { JobPostItem } from "../../components/job-post-item";
 import Link from "next/link";
+import { useState } from "react";
 import { useGetUserProfile } from "../../api/hooks/queries";
+import { JobPostItem } from "../../components/job-post-item";
 import getDecodedToken from "../../utils/getDecodedToken";
-import { useRouter } from "next/navigation";
-import { LOGIN } from "@/constants/routes";
-import { type getDictionary, LocaleType } from "@/app/dictionaries";
 
 // Mock user data
 const user = {
@@ -56,7 +54,7 @@ const initialJobPosts = [
 
 export default function ProfilePage({ lang, dictionary }: { lang: LocaleType, dictionary: Awaited<ReturnType<typeof getDictionary>>["products"]; }) {
   const decodedUser = getDecodedToken();
-  const router = useRouter();
+  // const router = useRouter();
   const { data } = useGetUserProfile(decodedUser?.user_id || "");
 
   // const dict = useTranslations(lang);
@@ -64,7 +62,7 @@ export default function ProfilePage({ lang, dictionary }: { lang: LocaleType, di
   console.log("lang: ", lang);
 
   const [jobPosts, setJobPosts] = useState(initialJobPosts);
-  if(!decodedUser) return router.push(`/${LOGIN}`)
+  // if(!decodedUser) return router.push(`/${LOGIN}`)
 
   const handleEditJob = (editedJob: any) => {
     setJobPosts(

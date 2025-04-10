@@ -20,20 +20,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { AUTH_TOKEN } from "@/constants/local-storage-keys";
 import { useState } from "react";
-import { getLocalStorageItem } from "../../utils/local-storage";
-import { useRouter } from "next/navigation";
-import { LOGIN } from "@/constants/routes";
-import { CreateServiceRequest } from "../../types/services";
 import { useForm } from "react-hook-form";
 import { useCreateServiceRequest } from "../../api/hooks/mutations";
 import { useGetServiceCategories } from "../../api/hooks/queries";
+import { CreateServiceRequest } from "../../types/services";
 
 export default function PostJobPage() {
   const [jobType, setJobType] = useState("one-time");
-  const token = getLocalStorageItem(AUTH_TOKEN);
-  const router = useRouter();
   const { mutate } = useCreateServiceRequest();
   const { data: categories } = useGetServiceCategories();
   const {
@@ -43,8 +37,6 @@ export default function PostJobPage() {
   } = useForm<CreateServiceRequest>();
 
   const onSubmit = (data: CreateServiceRequest) => mutate(data);
-
-  if (!token) return router.push(`/${LOGIN}`);
 
   return (
     <div className="min-h-screen bg-background">
