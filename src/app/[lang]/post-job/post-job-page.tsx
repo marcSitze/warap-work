@@ -80,6 +80,21 @@ export default function PostJobPage() {
                     </p>
                   )}
                 </div>
+                <div>
+                    <Label htmlFor="city">Location</Label>
+                    <Input
+                      id="city"
+                      {...register("city", {
+                        required: "city is required",
+                      })}
+                      placeholder="e.g. Brooklyn, NY"
+                    />
+                    {errors.city && (
+                      <p className="text-red-500 text-sm">
+                        {errors.city?.message}
+                      </p>
+                    )}
+                  </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -132,8 +147,16 @@ export default function PostJobPage() {
                     <Label htmlFor="duration">Duration</Label>
                     <Input
                       id="duration"
+                      {...register("duration", {
+                        required: "duration is required",
+                      })}
                       placeholder="e.g. 2 hours or 3 months"
                     />
+                    {errors.duration && (
+                      <p className="text-red-500 text-sm">
+                        {errors.duration?.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 

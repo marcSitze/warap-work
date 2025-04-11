@@ -1,5 +1,38 @@
 {
   "products": {
-    "cart": "ajouter dans le panier"
+    "cart": "Add to Cart"
+  },
+  "home": {
+    "hero": "Trouver le petit boulot idéal",
+    "subtitle": "Parcourez nos listes de petits boulots et de contrats dans votre région ou publiez votre propre offre d'emploi.",
+    "latest_job_offers": "Dernières offres d'emploi"
+  },
+  "common": {
+    "category": "Catégorie",
+    "search_jobs": "Rechercher des emplois",
+    "location": "Lieu",
+    "load_more_jobs": "Charger plus d'emplois",
+    "all_categories": "Toutes les catégories",
+    "all_locations": "Toutes les localités",
+    "newest_first": "Les plus récent",
+    "oldest_first": "Les plus ancien",
+    "highest_pay": "Rémunération le plus élevé",
+    "lowest_pay": "Rémunération le moins élevé",
+    "post_a_job": "Poster une offre",
+    "profile": "Profil",
+    "create_new_job": "Créer une nouvelle offre",
+    "edit_profile": "Editer le profil",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view_details": "Voir détails"
+  },
+  "profile": {
+    "manage_your_account": "Gérer votre compte",
+    "your_job_posts": "Vos offres d'emploi"
+  },
+  "footer": {
+    "title": "Mise en relation de personnes ayant un petit emploi et de personnes cherchant à gagner un revenu supplémentaire.",
+    "about_us": "A propos",
+    "contact_us": "Contactez nous"
   }
 }

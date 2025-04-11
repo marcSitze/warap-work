@@ -1,5 +1,38 @@
 {
   "products": {
     "cart": "Add to Cart"
+  },
+  "home": {
+    "hero": "Find the perfect small job",
+    "subtitle": "Browse through our listings of small jobs and gigs in your area or post your own job offer.",
+    "latest_job_offers": "Latest Job Offers"
+  },
+  "common": {
+    "category": "Category",
+    "search_jobs": "Search jobs",
+    "location": "Location",
+    "load_more_jobs": "Load more jobs",
+    "all_categories": "All Categories",
+    "all_locations": "All Locations",
+    "newest_first": "Newest First",
+    "oldest_first": "Oldest First",
+    "highest_pay": "Highest pay",
+    "lowest_pay": "Lowest Pay",
+    "post_a_job": "Post a job",
+    "profile": "Profile",
+    "create_new_job": "Create new job",
+    "edit_profile": "Edit Profile",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view_details": "View Details"
+  },
+  "profile": {
+    "manage_your_account": "Manage your account",
+    "your_job_posts": "Your Job Posts"
+  },
+  "footer": {
+    "title": "Connecting people with small jobs and those looking to earn extra income.",
+    "about_us": "About Us",
+    "contact_us": "Contact Us"
   }
 }
