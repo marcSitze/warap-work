@@ -5,8 +5,10 @@ import { AUTH_TOKEN } from "@/constants/local-storage-keys";
 import Link from "next/link";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import useLocation from "@/app/dictionaries/useLocation";
+import { getDictionary } from "@/app/dictionaries";
 
-const Header = () => {
+const Header = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>}) => {
+  const { common } = dictionary;
   const token = getLocalStorageItem(AUTH_TOKEN);
   const { localizeUrl } = useLocation()
 
@@ -18,16 +20,16 @@ const Header = () => {
         </Link>
         <div className="flex items-center gap-4">
           <Link href={localizeUrl("/post-job")}>
-            <Button>Post a Job</Button>
+            <Button>{common.post_a_job}</Button>
           </Link>
           <LanguageSwitcher />
           {!token ? (
             <Link href={localizeUrl("/login")}>
-              <Button variant="outline">Login</Button>
+              <Button variant="outline">{common.login}</Button>
             </Link>
           ) : (
             <Link href={localizeUrl("/profile")}>
-              <Button variant="link">Profile</Button>
+              <Button variant="link">{common.profile}</Button>
             </Link>
           )}
         </div>

@@ -2,7 +2,7 @@ import { i18n } from "@/i18n-config";
 import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
-import { LocaleType } from "../dictionaries";
+import { getDictionary, LocaleType } from "../dictionaries";
 import "../globals.css";
 import Providers from "./providers";
 
@@ -25,6 +25,7 @@ export default async function RootLayout(props: {
   params: Promise<{ lang: LocaleType }>;
 }) {
   const params = await props.params;
+  const dictionary = await getDictionary(params.lang);
   const { children } = props;
 
   return (
@@ -34,9 +35,9 @@ export default async function RootLayout(props: {
       >
         <Providers>
           <div className="min-h-screen bg-background">
-            <Header />
+            <Header dictionary={dictionary} />
             {children}
-            <Footer />
+            <Footer dictionary={dictionary} />
           </div>
         </Providers>
       </body>

@@ -1,9 +1,12 @@
+import { getDictionary } from '@/app/dictionaries'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import React from 'react'
 
-const Footer = () => {
+const Footer = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>}) => {
+  const { footer } = dictionary;
+
   return (
     <footer className="bg-muted mt-16 py-12">
       <div className="container mx-auto px-4">
@@ -11,7 +14,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-4">Warap</h3>
             <p className="text-muted-foreground">
-              Connecting people with small jobs and those looking to earn extra income.
+              {footer.title}
             </p>
           </div>
           <div>
@@ -19,7 +22,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-muted-foreground hover:text-foreground">
-                  About Us
+                  {footer.about_us}
                 </Link>
               </li>
               <li>
@@ -34,7 +37,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link href="/contact" className="text-muted-foreground hover:text-foreground">
-                  Contact Us
+                  {footer.contact_us}
                 </Link>
               </li>
             </ul>
@@ -51,7 +54,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} SmallJobs. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Warap work. All rights reserved.</p>
         </div>
       </div>
     </footer>

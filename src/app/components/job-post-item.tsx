@@ -1,9 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -12,44 +18,64 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { MapPin, Clock, DollarSign } from "lucide-react"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Clock, DollarSign, MapPin } from "lucide-react";
+import { useState } from "react";
+import { useGetUserProfile } from "../api/hooks/queries";
+import { BaseService } from "../types/services";
+import getDecodedToken from "../utils/getDecodedToken";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function JobPostItem({ job, onEdit, onDelete }: any) {
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-  const [editedJob, setEditedJob] = useState(job)
+type JobPostType = {
+  job: Partial<BaseService>;
+  onEdit: (e: Partial<BaseService>) => void;
+  onDelete: (id: string) => void;
+};
+
+export function JobPostItem({ job, onEdit, onDelete }: JobPostType) {
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editedJob, setEditedJob] = useState(job);
+  const decodedUser = getDecodedToken();
+  const { data: profileData } = useGetUserProfile(decodedUser?.user_id || "");
 
   const handleEdit = () => {
-    onEdit(editedJob)
-    setIsEditDialogOpen(false)
-  }
+    onEdit(editedJob);
+    setIsEditDialogOpen(false);
+  };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex justify-between items-start">
           {job.title}
-          <Badge variant={job.type === "One-time" ? "default" : job.type === "Recurring" ? "secondary" : "outline"}>
-            {job.type}
+          <Badge
+            variant={
+              // job.type === "One-time"
+              //   ? "default"
+              //   : job.type === "Recurring"
+              //   ? "secondary"
+              //   : 
+                "outline"
+            }
+          >
+            {job.duration}
           </Badge>
         </CardTitle>
         <CardDescription>
           <div className="flex items-center space-x-4 text-sm">
             <span className="flex items-center">
               <MapPin className="h-4 w-4 mr-1" />
-              {job.location}
+              {profileData?.district}
             </span>
             <span className="flex items-center">
               <Clock className="h-4 w-4 mr-1" />
-              Posted {job.postedTime}
+              Posted {job.created_at}
             </span>
             <span className="flex items-center">
               <DollarSign className="h-4 w-4 mr-1" />
-              {job.rate}
+              {job.fixed_amount}
             </span>
           </div>
         </CardDescription>
@@ -65,7 +91,10 @@ export function JobPostItem({ job, onEdit, onDelete }: any) {
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Edit Job Post</DialogTitle>
-              <DialogDescription>Make changes to your job post here. Click save when you&apos;re done.</DialogDescription>
+              <DialogDescription>
+                Make changes to your job post here. Click save when you&apos;re
+                done.
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
@@ -75,7 +104,9 @@ export function JobPostItem({ job, onEdit, onDelete }: any) {
                 <Input
                   id="title"
                   value={editedJob.title}
-                  onChange={(e) => setEditedJob({ ...editedJob, title: e.target.value })}
+                  onChange={(e) =>
+                    setEditedJob({ ...editedJob, title: e.target.value })
+                  }
                   className="col-span-3"
                 />
               </div>
@@ -86,7 +117,9 @@ export function JobPostItem({ job, onEdit, onDelete }: any) {
                 <Textarea
                   id="description"
                   value={editedJob.description}
-                  onChange={(e) => setEditedJob({ ...editedJob, description: e.target.value })}
+                  onChange={(e) =>
+                    setEditedJob({ ...editedJob, description: e.target.value })
+                  }
                   className="col-span-3"
                 />
               </div>
@@ -95,9 +128,11 @@ export function JobPostItem({ job, onEdit, onDelete }: any) {
                   Rate
                 </Label>
                 <Input
-                  id="rate"
-                  value={editedJob.rate}
-                  onChange={(e) => setEditedJob({ ...editedJob, rate: e.target.value })}
+                  id="fixed_amount"
+                  value={editedJob.fixed_amount}
+                  onChange={(e) =>
+                    setEditedJob({ ...editedJob, fixed_amount: Number(e.target.value) })
+                  }
                   className="col-span-3"
                 />
               </div>
@@ -109,11 +144,10 @@ export function JobPostItem({ job, onEdit, onDelete }: any) {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Button variant="destructive" onClick={() => onDelete(job.id)}>
+        <Button variant="destructive" onClick={() => onDelete(job?.uuid || "")}>
           Delete
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }
-

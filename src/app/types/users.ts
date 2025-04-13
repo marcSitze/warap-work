@@ -1,4 +1,4 @@
-import { ServiceProposal, ServiceRequest } from "./services";
+import { BaseService } from "./services";
 
 export type UserDTO = {
   first_name: string;
@@ -26,6 +26,6 @@ export type User = {
 }
 
 export type RichUser = User & {
-  requests: ServiceRequest[],
-  proposals: ServiceProposal[]
+  requests: BaseService[],
+  proposals: BaseService[]
 }

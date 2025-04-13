@@ -1,7 +1,7 @@
- 
 "use client";
 
-import { useGetServiceRequest } from "@/app/api/hooks/queries";
+import { useGetCurrentUser, useGetServiceRequest } from "@/app/api/hooks/queries";
+import { getDictionary } from "@/app/dictionaries";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,18 +14,19 @@ import {
 import { Separator } from "@/components/ui/separator";
 import {
   ArrowLeft,
-  Bookmark,
   Briefcase,
   Calendar,
   CheckCircle,
   CircleAlert,
   Clock,
-  DollarSign,
   MapPin,
-  MessageSquare,
   Share2
 } from "lucide-react";
+import moment from "moment";
+import Image from "next/image";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import whatsappIcon from "../../../../../public/whatsapp.png";
 
 // Extended mock data for a single job with more details
 // const jobDetails = {
@@ -65,11 +66,12 @@ import { useParams, useRouter } from "next/navigation";
 //   views: 27,
 // }
 
-export default function JobDetailsPage() {
+export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>;}) {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const { data: job } = useGetServiceRequest(id);
-  console.log("Service: ", job);
+  const { data: currentUser } = useGetCurrentUser();
+  const { common, jobDetails } = dictionary
   // In a real application, you would fetch the job details based on the ID
   // const { id } = params
   // const [job, setJob] = useState(null)
@@ -86,7 +88,7 @@ export default function JobDetailsPage() {
           onClick={() => router.back()}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Jobs
+          {common.back_to_jobs}
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -101,10 +103,10 @@ export default function JobDetailsPage() {
                     </CardTitle>
                     <CardDescription className="flex items-center text-sm">
                       <MapPin className="h-4 w-4 mr-1" />
-                      {job?.district}
+                      {job?.district}, {job?.city}
                       <span className="mx-2">•</span>
                       <Clock className="h-4 w-4 mr-1" />
-                      Posted {job?.created_at}
+                      {common.posted} {moment(job?.created_at).fromNow()}
                     </CardDescription>
                   </div>
                   {/* <Badge
@@ -127,45 +129,45 @@ export default function JobDetailsPage() {
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="flex flex-col">
-                    <span className="text-muted-foreground text-sm">Rate</span>
+                    <span className="text-muted-foreground text-sm">{common.rate}</span>
                     <span className="font-medium flex items-center">
-                      <DollarSign className="h-4 w-4 mr-1 text-primary" />
-                      {job?.fixed_amount}
+                      {/* <DollarSign className="h-4 w-4 mr-1 text-primary" /> */}
+                      {job?.fixed_amount} XAF
                     </span>
                   </div>
                   <div className="flex flex-col">
                     <span className="text-muted-foreground text-sm">
-                      Duration
+                      {common.duration}
                     </span>
                     <span className="font-medium flex items-center">
                       <Calendar className="h-4 w-4 mr-1 text-primary" />
-                      {job?.duration}
+                      {job?.duration} {common.hours}
                     </span>
                   </div>
                   <div className="flex flex-col">
                     <span className="text-muted-foreground text-sm">
-                      Category
+                      {common.category}
                     </span>
                     <span className="font-medium flex items-center">
                       <Briefcase className="h-4 w-4 mr-1 text-primary" />
                       {/* {job.category} */}
                     </span>
                   </div>
-                  <div className="flex flex-col">
+                  {/* <div className="flex flex-col">
                     <span className="text-muted-foreground text-sm">
                       Schedule
                     </span>
                     <span className="font-medium flex items-center">
                       <Clock className="h-4 w-4 mr-1 text-primary" />
-                      {/* {job.schedule} */}
+                      {job.schedule}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
 
                 <Separator />
 
                 <div>
-                  <h3 className="font-semibold mb-2">Description</h3>
+                  <h3 className="font-semibold mb-2">{common.description}</h3>
                   <p className="text-muted-foreground">{job?.description}</p>
                 </div>
 
@@ -192,12 +194,12 @@ export default function JobDetailsPage() {
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm">
                     <Share2 className="h-4 w-4 mr-2" />
-                    Share
+                    {common.share}
                   </Button>
-                  <Button variant="outline" size="sm">
+                  {/* <Button variant="outline" size="sm">
                     <Bookmark className="h-4 w-4 mr-2" />
                     Save
-                  </Button>
+                  </Button> */}
                 </div>
                 {/* <div className="text-sm text-muted-foreground">
                   <span className="mr-3">{job.views} views</span>
@@ -211,26 +213,29 @@ export default function JobDetailsPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Apply for this job</CardTitle>
+                <CardTitle>{jobDetails.apply_for_this_job}</CardTitle>
                 <CardDescription>
-                  Send your application directly to the job poster
+                  {jobDetails.send_your_application_directly}
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full">Apply Now</Button>
-                <p className="text-sm text-muted-foreground mt-4 text-center">
+              <CardContent className="flex flex-col">
+                {/* <Button className="w-full">Apply Now</Button> */}
+                <Link target="_blank" href={`https://wa.me/237${currentUser?.phone}`}>
+                  <Image src={whatsappIcon} alt="whatsapp" width={80} height={100} />
+                </Link>
+                {/* <p className="text-sm text-muted-foreground mt-4 text-center">
                   or
                 </p>
                 <Button variant="outline" className="w-full mt-2">
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Message Poster
-                </Button>
+                </Button> */}
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>About the Job Poster</CardTitle>
+                <CardTitle>{jobDetails.about_the_job_poster}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-4 mb-4">
@@ -270,10 +275,10 @@ export default function JobDetailsPage() {
                       <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
                       <div>
                         <h4 className="font-medium text-sm">
-                          Verified Identity
+                          {common.verified_identity}
                         </h4>
                         <p className="text-xs text-muted-foreground">
-                          ID has been verified
+                          {common.id_has_been_verified}
                         </p>
                       </div>
                     </div>
@@ -282,10 +287,10 @@ export default function JobDetailsPage() {
                       <CircleAlert className="h-5 w-5 text-red-500 mt-0.5" />
                       <div>
                         <h4 className="font-medium text-sm">
-                          Not Verified
+                          {common.not_verified}
                         </h4>
                         <p className="text-xs text-muted-foreground">
-                          ID has not been verified
+                          {common.id_has_not_been_verified}
                         </p>
                       </div>
                     </div>

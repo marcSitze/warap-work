@@ -8,5 +8,5 @@ export default async function Profile({
 }) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
-  return <ProfilePage lang={lang} dictionary={dictionary.products} />
+  return <ProfilePage lang={lang} dictionary={dictionary} />
 }
