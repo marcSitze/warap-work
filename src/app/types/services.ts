@@ -2,7 +2,10 @@ import { User } from "./users";
 
 export type ServiceRequest = {
   uuid?: string;
-  socials?: string;
+  socials?: {
+    whatsapp?: string;
+    phone?: string;
+  };
   user?: User;
   title: string;
   description: string;

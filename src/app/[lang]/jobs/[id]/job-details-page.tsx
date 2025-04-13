@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetCurrentUser, useGetServiceRequest } from "@/app/api/hooks/queries";
+import { useGetServiceRequest } from "@/app/api/hooks/queries";
 import { getDictionary } from "@/app/dictionaries";
 import { Button } from "@/components/ui/button";
 import {
@@ -70,7 +70,6 @@ export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<Ret
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const { data: job } = useGetServiceRequest(id);
-  const { data: currentUser } = useGetCurrentUser();
   const { common, jobDetails } = dictionary
   // In a real application, you would fetch the job details based on the ID
   // const { id } = params
@@ -220,7 +219,7 @@ export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<Ret
               </CardHeader>
               <CardContent className="flex flex-col">
                 {/* <Button className="w-full">Apply Now</Button> */}
-                <Link target="_blank" href={`https://wa.me/237${currentUser?.phone}`}>
+                <Link target="_blank" href={`https://wa.me/237${job?.socials?.whatsapp}`}>
                   <Image src={whatsappIcon} alt="whatsapp" width={80} height={100} />
                 </Link>
                 {/* <p className="text-sm text-muted-foreground mt-4 text-center">
