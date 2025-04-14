@@ -15,10 +15,10 @@ const Header = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDicti
   return (
     <header className="border-b">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href={localizeUrl("/")} className="text-2xl font-bold text-primary">
+        <Link href={localizeUrl("/")} className="text-2xl mr-2 font-bold text-primary">
           Warap
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
           <Link href={localizeUrl("/post-job")}>
             <Button>{common.post_a_job}</Button>
           </Link>

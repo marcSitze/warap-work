@@ -12,7 +12,7 @@ const useGetCurrentUser = () => {
   const query = useQuery({
     queryKey: [GET_CURRENT_USER],
     queryFn: () => dataProvider.get<RichUser>("/auth/current-user", {
-      "Authorization": "Bearer " + token
+      "Authorization": token
     })
   });
 

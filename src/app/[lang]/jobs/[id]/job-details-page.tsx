@@ -27,6 +27,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import whatsappIcon from "../../../../../public/whatsapp.png";
+import formatAmount from "@/app/utils/formatAmount";
 
 // Extended mock data for a single job with more details
 // const jobDetails = {
@@ -131,7 +132,7 @@ export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<Ret
                     <span className="text-muted-foreground text-sm">{common.rate}</span>
                     <span className="font-medium flex items-center">
                       {/* <DollarSign className="h-4 w-4 mr-1 text-primary" /> */}
-                      {job?.fixed_amount} XAF
+                      {formatAmount(Number(job?.fixed_amount))}
                     </span>
                   </div>
                   <div className="flex flex-col">

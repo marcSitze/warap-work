@@ -18,6 +18,8 @@ import { ServiceRequest } from "../types/services";
 import { useState } from "react";
 import { getDictionary, LocaleType } from "../dictionaries";
 import useLocation from "../dictionaries/useLocation";
+import moment from "moment";
+import formatAmount from "../utils/formatAmount";
 
 export default function LandingPage({ dictionary }: { lang: LocaleType, dictionary: Awaited<ReturnType<typeof getDictionary>>; }) {
   const { data } = useGetServicesRequestsList();
@@ -148,9 +150,9 @@ function JobCard({ job }: { job: ServiceRequest }) {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center text-muted-foreground">
               <Clock className="h-4 w-4 mr-1" />
-              <span className="text-sm">{job?.created_at}</span>
+              <span className="text-sm">{moment(job?.created_at).fromNow()}</span>
             </div>
-            <div className="font-medium text-primary">{job?.fixed_amount}</div>
+            <div className="font-medium text-primary">{formatAmount(job?.fixed_amount)}</div>
           </div>
 
           <p className="text-muted-foreground mb-4 line-clamp-2">

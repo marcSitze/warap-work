@@ -22,10 +22,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Clock, DollarSign, MapPin } from "lucide-react";
+import { Clock, MapPin } from "lucide-react";
+import moment from "moment";
 import { useState } from "react";
 import { useGetUserProfile } from "../api/hooks/queries";
 import { BaseService } from "../types/services";
+import formatAmount from "../utils/formatAmount";
 import getDecodedToken from "../utils/getDecodedToken";
 
 type JobPostType = {
@@ -71,11 +73,11 @@ export function JobPostItem({ job, onEdit, onDelete }: JobPostType) {
             </span>
             <span className="flex items-center">
               <Clock className="h-4 w-4 mr-1" />
-              Posted {job.created_at}
+              Posted {moment(job.created_at).fromNow()}
             </span>
             <span className="flex items-center">
-              <DollarSign className="h-4 w-4 mr-1" />
-              {job.fixed_amount}
+              {/* <DollarSign className="h-4 w-4 mr-1" /> */}
+              {formatAmount(Number(job.fixed_amount))}
             </span>
           </div>
         </CardDescription>
