@@ -20,9 +20,16 @@ import { getDictionary, LocaleType } from "../dictionaries";
 import useLocation from "../dictionaries/useLocation";
 import moment from "moment";
 import formatAmount from "../utils/formatAmount";
+import { Pagination } from "../components/Pagination/Pagination";
 
-export default function LandingPage({ dictionary }: { lang: LocaleType, dictionary: Awaited<ReturnType<typeof getDictionary>>; }) {
-  const { data } = useGetServicesRequestsList();
+export default function LandingPage({
+  dictionary,
+}: {
+  lang: LocaleType;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) {
+  const [page, setPage] = useState(1);
+  const { data } = useGetServicesRequestsList({ page });
   const { data: categories } = useGetServiceCategories();
   const [searchText, setSearchText] = useState("");
   const { common, home } = dictionary;
@@ -31,9 +38,7 @@ export default function LandingPage({ dictionary }: { lang: LocaleType, dictiona
     <main className="container mx-auto px-4 py-8">
       <section className="mb-12">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">
-            {home.hero}
-          </h1>
+          <h1 className="text-4xl font-bold mb-4">{home.hero}</h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             {home.subtitle}
           </p>
@@ -43,7 +48,11 @@ export default function LandingPage({ dictionary }: { lang: LocaleType, dictiona
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input onChange={e => setSearchText(e.target.value)} placeholder={`${common.search_jobs}...`} className="pl-10" />
+              <Input
+                onChange={(e) => setSearchText(e.target.value)}
+                placeholder={`${common.search_jobs}...`}
+                className="pl-10"
+              />
             </div>
             <div className="w-full">
               <Select>
@@ -51,7 +60,9 @@ export default function LandingPage({ dictionary }: { lang: LocaleType, dictiona
                   <SelectValue placeholder={common.category} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{dictionary.common.all_categories}</SelectItem>
+                  <SelectItem value="all">
+                    {dictionary.common.all_categories}
+                  </SelectItem>
                   {categories?.map((category) => (
                     <SelectItem key={category?.uuid} value={category?.uuid}>
                       {category["en_name"]}
@@ -103,23 +114,37 @@ export default function LandingPage({ dictionary }: { lang: LocaleType, dictiona
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data?.requests?.filter(item => item.title.toLowerCase().includes(searchText)).map((job) => (
-            <JobCard key={job?.uuid} job={job} />
-          ))}
+          {data?.requests
+            ?.filter((item) => item.title.toLowerCase().includes(searchText))
+            .map((job) => (
+              <JobCard key={job?.uuid} job={job} />
+            ))}
         </div>
 
-        <div className="mt-8 text-center">
-          <Button variant="outline" size="lg">
-            {common.load_more_jobs}
-          </Button>
-        </div>
+        {/* {data?.more && (
+          <div className="mt-8 text-center">
+            <Button
+              onClick={() => setPage(page + 1)}
+              variant="outline"
+              size="lg"
+            >
+              {common.load_more_jobs}
+            </Button>
+          </div>
+        )} */}
+        <Pagination
+          page={page}
+          onPageChange={(page: number) => setPage(page)}
+          total={data?.total || 0}
+          hasMore={data?.more || false}
+        />
       </section>
     </main>
   );
 }
 
 function JobCard({ job }: { job: ServiceRequest }) {
-  const { localizeUrl } = useLocation()
+  const { localizeUrl } = useLocation();
 
   return (
     <Link href={localizeUrl(`/jobs/${job.uuid}`)}>
@@ -150,9 +175,13 @@ function JobCard({ job }: { job: ServiceRequest }) {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center text-muted-foreground">
               <Clock className="h-4 w-4 mr-1" />
-              <span className="text-sm">{moment(job?.created_at).fromNow()}</span>
+              <span className="text-sm">
+                {moment(job?.created_at).fromNow()}
+              </span>
             </div>
-            <div className="font-medium text-primary">{formatAmount(job?.fixed_amount)}</div>
+            <div className="font-medium text-primary">
+              {formatAmount(job?.fixed_amount)}
+            </div>
           </div>
 
           <p className="text-muted-foreground mb-4 line-clamp-2">
