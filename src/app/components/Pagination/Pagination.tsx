@@ -19,6 +19,7 @@ export function Pagination({
   hasMore: boolean;
 }) {
   const pages = Math.floor(total / SIZE);
+  console.log({ pages });
 
   return (
     <PaginationCN>
@@ -52,7 +53,7 @@ export function Pagination({
         {/* <PaginationItem>
           <PaginationEllipsis />
         </PaginationItem> */}
-        {page !== pages && (
+        {page !== pages && pages !== 0 && (
           <PaginationItem>
             <PaginationNext onClick={() => onPageChange(page + 1)} />
           </PaginationItem>

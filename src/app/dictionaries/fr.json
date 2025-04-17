@@ -58,7 +58,15 @@
     "fixed_amount_is_required": "le montant est requis",
     "duration_is_required": "la durée est requise",
     "select_a_category": "Sélectionner une catégorie",
-    "create_job": "Créer un emploi"
+    "create_job": "Créer un emploi",
+    "email": "Email",
+    "password": "Mot de passe",
+    "district": "Quartier",
+    "confirm_password": "Confirmer le mot de passe",
+    "create_account": "Créer un compte",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "phone": "Téléphone"
   },
   "profile": {
     "manage_your_account": "Gérer votre compte",
@@ -69,6 +77,18 @@
     "send_your_application_directly": "Envoyez votre candidature directement à l'annonce",
     "about_the_job_poster": "À propos de l'employeur"
 
+  },
+  "login": {
+    "login_to": "Se connecter à Warap",
+    "enter_your_email_and_password": "Saisissez votre adresse électronique et votre mot de passe pour accéder à votre compte",
+    "forgot_password": "Mot de passe oublié ?",
+    "login_failed_please_try_again": "La connexion a échoué. Veuillez réessayer.",
+    "dont_have_an_account": "Vous n'avez pas de compte ? S'inscrire"
+  },
+  "signup": {
+    "create_an_account": "Créer un compte",
+    "enter_your_details_below": "Saisissez vos coordonnées ci-dessous pour créer votre compte",
+    "already_have_an_account": "Vous avez déjà un compte"
   },
   "footer": {
     "title": "Mise en relation de personnes ayant un petit emploi et de personnes cherchant à gagner un revenu supplémentaire.",

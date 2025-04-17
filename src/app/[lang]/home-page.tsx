@@ -28,8 +28,11 @@ export default function LandingPage({
   lang: LocaleType;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) {
+  type Sort = "asc" | "desc";
   const [page, setPage] = useState(1);
-  const { data } = useGetServicesRequestsList({ page });
+  const [sort, setSort] = useState<Sort>("asc");
+  const [category, setCategory] = useState("");
+  const { data } = useGetServicesRequestsList({ page, sort, category_uuid: category });
   const { data: categories } = useGetServiceCategories();
   const [searchText, setSearchText] = useState("");
   const { common, home } = dictionary;
@@ -45,7 +48,7 @@ export default function LandingPage({
         </div>
 
         <div className="bg-card rounded-lg shadow-sm p-6 max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -55,7 +58,7 @@ export default function LandingPage({
               />
             </div>
             <div className="w-full">
-              <Select>
+              <Select value={category} onValueChange={(value) => setCategory(value === "all" ? "": value)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={common.category} />
                 </SelectTrigger>
@@ -77,7 +80,7 @@ export default function LandingPage({
                 </SelectContent>
               </Select>
             </div>
-            <div className="w-full">
+            {/* <div className="w-full">
               <Select>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Location" />
@@ -91,7 +94,7 @@ export default function LandingPage({
                   <SelectItem value="remote">Remote</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
           <Button className="w-full mt-4">{common.search_jobs}</Button>
         </div>
@@ -100,15 +103,15 @@ export default function LandingPage({
       <section>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">{home.latest_job_offers}s</h2>
-          <Select defaultValue="newest">
+          <Select defaultValue="newest" value={sort} onValueChange={(value: Sort) => setSort(value)}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="newest">{common.newest_first}</SelectItem>
-              <SelectItem value="oldest">{common.oldest_first}</SelectItem>
-              <SelectItem value="highest-pay">{common.highest_pay}</SelectItem>
-              <SelectItem value="lowest-pay">{common.lowest_pay}</SelectItem>
+              <SelectItem value="asc">{common.newest_first}</SelectItem>
+              <SelectItem value="desc">{common.oldest_first}</SelectItem>
+              {/* <SelectItem value="max_amount">{common.highest_pay}</SelectItem>
+              <SelectItem value="min_amount">{common.lowest_pay}</SelectItem> */}
             </SelectContent>
           </Select>
         </div>
