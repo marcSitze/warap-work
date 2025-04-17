@@ -52,12 +52,17 @@ const createDataProvider = (): DataProvider => {
           body: body ? JSON.stringify(body) : undefined,
         });
         return result.json();
+      } else {
+        // Refresh failed, force logout
+        localStorage.removeItem(AUTH_TOKEN);
+        localStorage.removeItem(REFRESH_TOKEN);
       }
-    } else {
-      // Refresh failed, force logout
-      localStorage.removeItem(AUTH_TOKEN);
-      localStorage.removeItem(REFRESH_TOKEN);
     }
+    // else {
+    //   // Refresh failed, force logout
+    //   localStorage.removeItem(AUTH_TOKEN);
+    //   localStorage.removeItem(REFRESH_TOKEN);
+    // }
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
