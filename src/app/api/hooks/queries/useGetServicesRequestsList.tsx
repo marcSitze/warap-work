@@ -1,4 +1,5 @@
 import createDataProvider from "@/app/config/httpProvider";
+import { useLoader } from "@/app/contexts/loader/LoaderProvider";
 import { PaginatedResponse } from "@/app/types/common";
 import { ServiceRequest } from "@/app/types/services";
 import { SERVICES_REQUESTS_LIST } from "@/constants/dataProviders";
@@ -30,6 +31,7 @@ function toQueryString(params: Params): string {
 
 const useGetServicesRequestsList = (params : Params = {}) => {
   const queryString = toQueryString({ ...params, size: params?.size || SIZE });
+  const { stop } = useLoader();
 
   const query = useQuery({
     queryKey: [SERVICES_REQUESTS_LIST, params?.page, params?.sort, params?.category_uuid],
@@ -38,6 +40,10 @@ const useGetServicesRequestsList = (params : Params = {}) => {
         `/services/requests/list?${queryString}`
       ),
     placeholderData: keepPreviousData,
+    select: (data) => {
+      stop();
+      return data
+    }
   });
 
   return query;

@@ -9,18 +9,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Clock, MapPin, Search } from "lucide-react";
+import moment from "moment";
 import Link from "next/link";
+import { useState } from "react";
 import {
   useGetServiceCategories,
   useGetServicesRequestsList,
 } from "../api/hooks/queries";
-import { ServiceRequest } from "../types/services";
-import { useState } from "react";
+import { Pagination } from "../components/Pagination/Pagination";
 import { getDictionary, LocaleType } from "../dictionaries";
 import useLocation from "../dictionaries/useLocation";
-import moment from "moment";
+import { ServiceRequest } from "../types/services";
 import formatAmount from "../utils/formatAmount";
-import { Pagination } from "../components/Pagination/Pagination";
+import JobPostItemSkeleton from "../components/JobPostItem/JobPostItemSkeleton";
+import { useLoader } from "../contexts/loader/LoaderProvider";
 
 export default function LandingPage({
   dictionary,
@@ -32,7 +34,12 @@ export default function LandingPage({
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<Sort>("asc");
   const [category, setCategory] = useState("");
-  const { data } = useGetServicesRequestsList({ page, sort, category_uuid: category });
+  const { data, isLoading: isServiceLoading } = useGetServicesRequestsList({
+    page,
+    sort,
+    category_uuid: category,
+  });
+  const { start } = useLoader();
   const { data: categories } = useGetServiceCategories();
   const [searchText, setSearchText] = useState("");
   const { common, home } = dictionary;
@@ -58,7 +65,13 @@ export default function LandingPage({
               />
             </div>
             <div className="w-full">
-              <Select value={category} onValueChange={(value) => setCategory(value === "all" ? "": value)}>
+              <Select
+                value={category}
+                onValueChange={(value) => {
+                  start("Categories filters...");
+                  setCategory(value === "all" ? "" : value);
+                }}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={common.category} />
                 </SelectTrigger>
@@ -103,7 +116,11 @@ export default function LandingPage({
       <section>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">{home.latest_job_offers}s</h2>
-          <Select defaultValue="newest" value={sort} onValueChange={(value: Sort) => setSort(value)}>
+          <Select
+            defaultValue="newest"
+            value={sort}
+            onValueChange={(value: Sort) => setSort(value)}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
@@ -117,11 +134,20 @@ export default function LandingPage({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data?.requests
+          {isServiceLoading
+            ? Array.from({ length: 10 }, (_, idx) => (
+                <JobPostItemSkeleton key={idx} />
+              ))
+            : data?.requests
+                ?.filter((item) =>
+                  item.title.toLowerCase().includes(searchText)
+                )
+                .map((job) => <JobCard key={job?.uuid} job={job} />)}
+          {/* {data?.requests
             ?.filter((item) => item.title.toLowerCase().includes(searchText))
             .map((job) => (
               <JobCard key={job?.uuid} job={job} />
-            ))}
+            ))} */}
         </div>
 
         {/* {data?.more && (
@@ -177,7 +203,7 @@ function JobCard({ job }: { job: ServiceRequest }) {
 
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center text-muted-foreground">
-              <Clock className="h-4 w-4 mr-1" />
+              <Clock className="h-4 w-4  mr-1" />
               <span className="text-sm">
                 {moment(job?.created_at).fromNow()}
               </span>
