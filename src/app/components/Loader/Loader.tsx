@@ -2,7 +2,6 @@ import { useLoader } from "@/app/contexts/loader/LoaderProvider";
 
 const Loader = () => {
   const { isLoading, loaderText } = useLoader();
-  console.log({ isLoading, loaderText });
   return (
     <>
       {isLoading ? (

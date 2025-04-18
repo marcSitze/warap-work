@@ -4,13 +4,16 @@ import { BaseService } from "@/app/types/services";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import ProposalForm from "./ProposalForm";
+import JobPostItemSkeleton from "@/app/components/JobPostItem/JobPostItemSkeleton";
 
 const JobProposalsTab = ({
   servicesProposals,
   dictionary,
+  isLoading,
 }: {
   servicesProposals: BaseService[];
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
+  isLoading?: boolean;
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [jobPosts, setJobPosts] =
@@ -40,14 +43,18 @@ const JobProposalsTab = ({
               {common.create_new_proposal}
             </Button>
           </div>
-          {servicesProposals.map((job) => (
-            <JobPostItem
-              key={job.uuid}
-              job={job}
-              onEdit={handleEditJob}
-              onDelete={handleDeleteJob}
-            />
-          ))}
+          {isLoading
+            ? Array.from({ length: 3 }, (_, idx) => (
+                <JobPostItemSkeleton key={idx} />
+              ))
+            : servicesProposals.map((job) => (
+                <JobPostItem
+                  key={job.uuid}
+                  job={job}
+                  onEdit={handleEditJob}
+                  onDelete={handleDeleteJob}
+                />
+              ))}
         </>
       )}
     </div>

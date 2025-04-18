@@ -19,7 +19,6 @@ export function Pagination({
   hasMore: boolean;
 }) {
   const pages = Math.floor(total / SIZE);
-  console.log({ pages });
 
   return (
     <PaginationCN>

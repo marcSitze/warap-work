@@ -1,4 +1,3 @@
-import { AUTH_TOKEN, REFRESH_TOKEN } from "@/constants/local-storage-keys";
 import { API_URL } from ".";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -31,10 +30,10 @@ const createDataProvider = (): DataProvider => {
       body: body ? JSON.stringify(body) : undefined,
     });
 
-    if (response.status === 401) {
-      localStorage.removeItem(AUTH_TOKEN);
-      localStorage.removeItem(REFRESH_TOKEN);
-    }
+    // if (response.status === 401) {
+    //   localStorage.removeItem(AUTH_TOKEN);
+    //   localStorage.removeItem(REFRESH_TOKEN);
+    // }
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);

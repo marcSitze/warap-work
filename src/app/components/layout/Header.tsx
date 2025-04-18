@@ -9,7 +9,7 @@ import { getDictionary } from "@/app/dictionaries";
 
 const Header = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>}) => {
   const { common } = dictionary;
-  const token = getLocalStorageItem(AUTH_TOKEN);
+  const token = !!getLocalStorageItem(AUTH_TOKEN);
   const { localizeUrl } = useLocation()
 
   return (

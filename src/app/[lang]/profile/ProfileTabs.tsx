@@ -5,7 +5,7 @@ import JobRequestTab from "./JobRequestTab";
 import { getDictionary } from "@/app/dictionaries";
 
 const ProfileTabs = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>; }) => {
-  const { data: currentUser } = useGetCurrentUser();
+  const { data: currentUser, isLoading } = useGetCurrentUser();
   const { common } = dictionary
 
   return (
@@ -15,10 +15,10 @@ const ProfileTabs = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof get
         <TabsTrigger value="proposals">{common.service_proposals}</TabsTrigger>
       </TabsList>
       <TabsContent value="requests">
-        <JobRequestTab dictionary={dictionary} servicesRequests={currentUser?.requests || []} />
+        <JobRequestTab dictionary={dictionary} isLoading={isLoading} servicesRequests={currentUser?.requests || []} />
       </TabsContent>
       <TabsContent value="proposals">
-        <JobProposalsTab dictionary={dictionary} servicesProposals={currentUser?.proposals || []} />
+        <JobProposalsTab dictionary={dictionary} isLoading={isLoading} servicesProposals={currentUser?.proposals || []} />
       </TabsContent>
     </Tabs>
   );

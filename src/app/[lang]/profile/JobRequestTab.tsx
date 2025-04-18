@@ -1,4 +1,5 @@
 import { JobPostItem } from "@/app/components/job-post-item";
+import JobPostItemSkeleton from "@/app/components/JobPostItem/JobPostItemSkeleton";
 import PostForm from "@/app/components/PostForm/PostForm";
 import { getDictionary } from "@/app/dictionaries";
 import { BaseService } from "@/app/types/services";
@@ -8,9 +9,11 @@ import { useState } from "react";
 const JobRequestTab = ({
   servicesRequests,
   dictionary,
+  isLoading,
 }: {
   servicesRequests: BaseService[];
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
+  isLoading?: boolean;
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [jobPosts, setJobPosts] =
@@ -40,14 +43,18 @@ const JobRequestTab = ({
               {common.create_new_job}
             </Button>
           </div>
-          {servicesRequests.map((job) => (
-            <JobPostItem
-              key={job.uuid}
-              job={job}
-              onEdit={handleEditJob}
-              onDelete={handleDeleteJob}
-            />
-          ))}
+          {isLoading
+            ? Array.from({ length: 3 }, (_, idx) => (
+                <JobPostItemSkeleton key={idx} />
+              ))
+            : servicesRequests.map((job) => (
+                <JobPostItem
+                  key={job.uuid}
+                  job={job}
+                  onEdit={handleEditJob}
+                  onDelete={handleDeleteJob}
+                />
+              ))}
         </>
       )}
     </div>

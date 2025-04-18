@@ -27,11 +27,12 @@ export default function ProfilePage({ dictionary }: { lang: LocaleType, dictiona
   const { localizeUrl } = useLocation()
   const { profile, common } = dictionary;
 
-  // if(!decodedUser) return router.push(`/${LOGIN}`)
-
   const handleLogout = () => {
     setLocalStorageItem(AUTH_TOKEN, "");
     router.push(localizeUrl(`/${LOGIN}`))
+  }
+  if(!decodedUser) {
+    handleLogout()
   }
 
   return (

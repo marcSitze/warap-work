@@ -3,7 +3,6 @@ import { jwtDecode } from "jwt-decode"
 import { getLocalStorageItem } from "./local-storage"
 
 const token = getLocalStorageItem(AUTH_TOKEN) || ""
-console.log({ token })
 
 type TokenUser = {
   user_id: string,
