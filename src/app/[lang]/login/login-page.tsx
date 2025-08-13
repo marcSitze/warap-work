@@ -1,4 +1,5 @@
 "use client";
+import { getDictionary, LocaleType } from "@/app/dictionaries";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,10 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../../api/hooks/mutations";
-import { getDictionary, LocaleType } from "@/app/dictionaries";
 
 type LoginFormValues = {
   email: string;
@@ -40,7 +39,7 @@ export default function LoginPage({
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
+    <div className="min-h-screen px-4 bg-background flex items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-center">
@@ -93,7 +92,10 @@ export default function LoginPage({
             <Button className="w-full" type="submit" disabled={isPending}>
               {isPending ? "Logging in..." : "Login"}
             </Button>
-            <div className="flex justify-between w-full text-sm">
+            {/* *
+            * @ Not Yet Functional
+            */}
+            {/* <div className="flex justify-between w-full text-sm">
               <Link
                 href="/forgot-password"
                 className="text-primary hover:underline"
@@ -103,7 +105,7 @@ export default function LoginPage({
               <Link href="/signup" className="text-primary hover:underline">
                 {login.dont_have_an_account}
               </Link>
-            </div>
+            </div> */}
           </CardFooter>
         </form>
       </Card>

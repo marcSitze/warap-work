@@ -38,10 +38,10 @@ export default function SignupPage({
     <div className="min-h-screen bg-background flex items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center">
+          <CardTitle className="text-2xl">
             {signup.create_an_account}
           </CardTitle>
-          <CardDescription className="text-center">
+          <CardDescription>
             {signup.enter_your_details_below}
           </CardDescription>
         </CardHeader>
@@ -182,7 +182,7 @@ export default function SignupPage({
               {common.create_account}
             </Button>
             <div className="text-sm text-center">
-              {signup.already_have_an_account}?{" "}
+              {signup.already_have_an_account}{" "}
               <Link href={`/${LOGIN}`} className="text-primary hover:underline">
                 {common.login}
               </Link>
