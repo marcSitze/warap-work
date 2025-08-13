@@ -32,7 +32,7 @@ export default function LandingPage({
 }) {
   type Sort = "asc" | "desc";
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState<Sort>("asc");
+  const [sort, setSort] = useState<Sort>("desc");
   const [category, setCategory] = useState("");
   const { data, isLoading: isServiceLoading } = useGetServicesRequestsList({
     page,
@@ -115,7 +115,7 @@ export default function LandingPage({
 
       <section>
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">{home.latest_job_offers}s</h2>
+          <h2 className="text-2xl font-bold">{home.latest_job_offers}</h2>
           <Select
             defaultValue="newest"
             value={sort}
@@ -125,8 +125,8 @@ export default function LandingPage({
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="asc">{common.newest_first}</SelectItem>
-              <SelectItem value="desc">{common.oldest_first}</SelectItem>
+              <SelectItem value="desc">{common.newest_first}</SelectItem>
+              <SelectItem value="asc">{common.oldest_first}</SelectItem>
               {/* <SelectItem value="max_amount">{common.highest_pay}</SelectItem>
               <SelectItem value="min_amount">{common.lowest_pay}</SelectItem> */}
             </SelectContent>

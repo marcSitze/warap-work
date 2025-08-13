@@ -28,6 +28,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import whatsappIcon from "../../../../../public/whatsapp.png";
 import formatAmount from "@/app/utils/formatAmount";
+import JobDetailsPageSkeleton from "@/app/components/JobDetailsPage/JobDetailsPageSkeleton";
 
 // Extended mock data for a single job with more details
 // const jobDetails = {
@@ -70,7 +71,7 @@ import formatAmount from "@/app/utils/formatAmount";
 export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>;}) {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
-  const { data: job } = useGetServiceRequest(id);
+  const { data: job, isLoading } = useGetServiceRequest(id);
   const { common, jobDetails } = dictionary
   // In a real application, you would fetch the job details based on the ID
   // const { id } = params
@@ -91,7 +92,7 @@ export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<Ret
           {common.back_to_jobs}
         </Button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {isLoading ? <JobDetailsPageSkeleton /> : <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main job details */}
           <div className="lg:col-span-2 space-y-6">
             <Card>
@@ -331,7 +332,7 @@ export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<Ret
               </CardContent>
             </Card> */}
           </div>
-        </div>
+        </div>}
       </main>
     </div>
   );

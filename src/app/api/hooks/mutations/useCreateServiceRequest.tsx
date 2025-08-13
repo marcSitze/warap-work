@@ -8,9 +8,8 @@ import { toast } from "react-toastify";
 
 const dataProvider = createDataProvider();
 
-const token = getLocalStorageItem(AUTH_TOKEN);
-
 const useCreateServiceRequest = ({ callback }: { callback?: () => void }) => {
+  const token = getLocalStorageItem(AUTH_TOKEN);
   const mutation = useMutation({
     mutationKey: [CREATE_SERVICE_REQUEST],
     mutationFn: (data: CreateServiceRequest) =>
