@@ -5,6 +5,7 @@ import Header from "../components/layout/Header";
 import { getDictionary, LocaleType } from "../dictionaries";
 import "../globals.css";
 import Providers from "./providers";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default async function RootLayout(props: {
             {children}
             <Footer dictionary={dictionary} />
           </div>
+          <GoogleAnalytics gaId="GTM-NH7ZPQB8" />
         </Providers>
       </body>
     </html>
