@@ -7,7 +7,7 @@ const dataProvider = createDataProvider();
 
 const useGetServiceRequest = (uuid: string) => {
   const query = useQuery({
-    queryKey: [SERVICE_REQUEST],
+    queryKey: [SERVICE_REQUEST, uuid],
     queryFn: () => dataProvider.get<ServiceRequest>(`/services/requests/${uuid}/get`)
   });
 
