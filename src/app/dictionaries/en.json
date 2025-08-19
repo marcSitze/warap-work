@@ -67,7 +67,9 @@
     "first_name": "First Name",
     "last_name": "Last Name",
     "phone": "Phone",
-    "subscribe": "Subscribe"
+    "subscribe": "Subscribe",
+    "contact": "Contact",
+    "contact_number": "Contact Number"
   },
   "profile": {
     "manage_your_account": "Manage your account",

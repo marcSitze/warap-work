@@ -20,6 +20,7 @@ const useCreateServiceRequest = ({ callback }: { callback?: () => void }) => {
           ...data,
           duration: Number(data.duration),
           fixed_amount: Number(data.fixed_amount),
+          phone: data.whatsapp || "",
         },
         {
           Authorization: "Bearer " + token,

@@ -67,7 +67,9 @@
     "first_name": "Prénom",
     "last_name": "Nom",
     "phone": "Téléphone",
-    "subscribe": "Abonnez-vous"
+    "subscribe": "Abonnez-vous",
+    "contact": "Contact",
+    "contact_number": "Numero a contacter"
   },
   "profile": {
     "manage_your_account": "Gérer votre compte",

@@ -33,6 +33,7 @@ export type CreateServiceRequest = {
   district: string;
   duration: number;
   fixed_amount: number;
+  category?: string;
   email?: string;
   phone?: string;
   whatsapp?: string;
