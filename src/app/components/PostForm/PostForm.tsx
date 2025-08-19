@@ -29,7 +29,7 @@ import { useForm } from "react-hook-form";
 const ProposalAndPostForm = ({ onClose, dictionary }: { onClose?: () => void; dictionary: Awaited<ReturnType<typeof getDictionary>>; }) => {
   const { common } = dictionary;
   const { data: currentUser, refetch } = useGetCurrentUser();
-  const { mutate } = useCreateServiceRequest({
+  const { mutate, isPending } = useCreateServiceRequest({
     callback: () => {
       refetch();
       if (onClose) onClose();
@@ -61,7 +61,7 @@ const ProposalAndPostForm = ({ onClose, dictionary }: { onClose?: () => void; di
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div>
                 <Label htmlFor="title">{common.job_title}</Label>
                 <Input
@@ -183,8 +183,8 @@ const ProposalAndPostForm = ({ onClose, dictionary }: { onClose?: () => void; di
                 />
               </div> */}
             </div>
-            <CardFooter>
-              <Button type="submit" className="w-full">
+            <CardFooter className="px-0">
+              <Button disabled={isPending} type="submit" className="w-full">
                 {common.create_job}
               </Button>
             </CardFooter>

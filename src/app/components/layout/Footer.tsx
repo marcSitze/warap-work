@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const Footer = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>}) => {
-  const { footer } = dictionary;
+  const { footer, common } = dictionary;
 
   return (
     <footer className="bg-muted mt-16 py-12">
@@ -18,7 +18,7 @@ const Footer = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDicti
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-bold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-bold mb-4">{footer.quick_links}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-muted-foreground hover:text-foreground">
@@ -27,7 +27,7 @@ const Footer = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDicti
               </li>
               <li>
                 <Link href="/how-it-works" className="text-muted-foreground hover:text-foreground">
-                  How It Works
+                  {footer.how_it_works}
                 </Link>
               </li>
               <li>
@@ -45,16 +45,16 @@ const Footer = ({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDicti
           <div>
             <h3 className="text-lg font-bold mb-4">Newsletter</h3>
             <p className="text-muted-foreground mb-4">
-              Subscribe to our newsletter for the latest job opportunities.
+              {footer.subscribe_to_our_newsletter_for_the_latest_job_opportunities}
             </p>
             <div className="flex gap-2">
               <Input placeholder="Your email" />
-              <Button>Subscribe</Button>
+              <Button>{common.subscribe}</Button>
             </div>
           </div>
         </div>
         <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Warap work. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Warap work. {footer.all_rights_reserved}</p>
         </div>
       </div>
     </footer>
