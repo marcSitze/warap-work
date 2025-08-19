@@ -5,7 +5,7 @@
   "home": {
     "hero": "Trouver le petit boulot idéal",
     "subtitle": "Parcourez nos listes de petits boulots et de contrats dans votre région ou publiez votre propre offre d'emploi.",
-    "latest_job_offers": "Dernières offres d'emploi"
+    "latest_job_offers": "Derniers Warap"
   },
   "common": {
     "category": "Catégorie",
@@ -66,7 +66,8 @@
     "create_account": "Créer un compte",
     "first_name": "Prénom",
     "last_name": "Nom",
-    "phone": "Téléphone"
+    "phone": "Téléphone",
+    "subscribe": "Abonnez-vous"
   },
   "profile": {
     "manage_your_account": "Gérer votre compte",
@@ -93,6 +94,10 @@
   "footer": {
     "title": "Mise en relation de personnes ayant un petit emploi et de personnes cherchant à gagner un revenu supplémentaire.",
     "about_us": "A propos",
-    "contact_us": "Contactez nous"
+    "contact_us": "Contactez nous",
+    "quick_links": "Liens rapides",
+    "how_it_works": "Comment ça marche",
+    "subscribe_to_our_newsletter_for_the_latest_job_opportunities": "Abonnez-vous à notre newsletter pour recevoir les dernières offres d'emploi.",
+    "all_rights_reserved": "Tous droits réservés."
   }
 }

@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../../api/hooks/mutations";
+import Link from "next/link";
+import useLocation from "@/app/dictionaries/useLocation";
 
 type LoginFormValues = {
   email: string;
@@ -26,6 +28,7 @@ export default function LoginPage({
   lang: LocaleType;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) {
+  const { localizeUrl } = useLocation();
   const { login, common } = dictionary;
   const { mutate, isPending, isError } = useLoginMutation();
   const {
@@ -95,17 +98,17 @@ export default function LoginPage({
             {/* *
             * @ Not Yet Functional
             */}
-            {/* <div className="flex justify-between w-full text-sm">
-              <Link
+           <div className="flex justify-between w-full text-sm">
+              {/* <Link
                 href="/forgot-password"
                 className="text-primary hover:underline"
               >
                 {login.forgot_password}
-              </Link>
-              <Link href="/signup" className="text-primary hover:underline">
+              </Link> */}
+              <Link href={localizeUrl("/signup")} className="text-primary hover:underline">
                 {login.dont_have_an_account}
               </Link>
-            </div> */}
+            </div>
           </CardFooter>
         </form>
       </Card>
