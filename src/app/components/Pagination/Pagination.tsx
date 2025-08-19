@@ -12,18 +12,19 @@ export function Pagination({
   page,
   onPageChange,
   total,
+  hasMore
 }: {
   page: number;
   onPageChange: (page: number) => void;
   total: number;
   hasMore: boolean;
 }) {
-  const pages = Math.floor(total / SIZE);
+  const pages = Math.ceil(total / SIZE);
 
   return (
     <PaginationCN>
       <PaginationContent>
-        {page !== 1 && (
+        {page > 1 && (
           <PaginationItem>
             <PaginationPrevious onClick={() => onPageChange(page - 1)} />
           </PaginationItem>
@@ -52,7 +53,7 @@ export function Pagination({
         {/* <PaginationItem>
           <PaginationEllipsis />
         </PaginationItem> */}
-        {page !== pages && pages !== 0 && (
+        {hasMore && (
           <PaginationItem>
             <PaginationNext onClick={() => onPageChange(page + 1)} />
           </PaginationItem>
