@@ -4,7 +4,8 @@ import {
   useGetServiceCategories,
 } from "@/app/api/hooks/queries";
 import { getDictionary } from "@/app/dictionaries";
-import { CreateServiceRequest } from "@/app/types/services";
+import useLocation from "@/app/dictionaries/useLocation";
+import { CreateServiceRequest, ServiceProposalCategory } from "@/app/types/services";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,26 +29,29 @@ import { useForm } from "react-hook-form";
 
 const ProposalAndPostForm = ({ onClose, dictionary }: { onClose?: () => void; dictionary: Awaited<ReturnType<typeof getDictionary>>; }) => {
   const { common } = dictionary;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<CreateServiceRequest>();
+  const { lang } = useLocation()
+
   const { data: currentUser, refetch } = useGetCurrentUser();
   const { mutate, isPending } = useCreateServiceRequest({
     callback: () => {
+      reset();
       refetch();
       if (onClose) onClose();
     },
   });
   const { data: categories } = useGetServiceCategories();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateServiceRequest>();
 
   const onSubmit = (data: CreateServiceRequest) =>
     mutate({
       ...data,
-      email: currentUser?.email,
-      phone: currentUser?.phone,
-      whatsapp: currentUser?.phone,
+      email: currentUser?.email
     });
 
   return (
@@ -98,7 +102,7 @@ const ProposalAndPostForm = ({ onClose, dictionary }: { onClose?: () => void; di
                   {...register("city", {
                     required: common.city_is_required,
                   })}
-                  placeholder="e.g. Brooklyn, NY"
+                  placeholder="e.g. Yaounde, Douala, etc."
                 />
                 {errors.city && (
                   <p className="text-red-500 text-sm">{errors.city?.message}</p>
@@ -113,7 +117,7 @@ const ProposalAndPostForm = ({ onClose, dictionary }: { onClose?: () => void; di
                     {...register("district", {
                       required: common.district_is_required,
                     })}
-                    placeholder="e.g. Brooklyn, NY"
+                    placeholder="e.g. Carrefour Bastos, Akwa, etc."
                   />
                   {errors.district && (
                     <p className="text-red-500 text-sm">
@@ -158,7 +162,9 @@ const ProposalAndPostForm = ({ onClose, dictionary }: { onClose?: () => void; di
 
               <div className="mb-3">
                 <Label htmlFor="category">{common.category}</Label>
-                <Select>
+                <Select onValueChange={(value) => {
+                  setValue("category", value)
+                }}>
                   <SelectTrigger>
                     <SelectValue placeholder={common.select_a_category} />
                   </SelectTrigger>
@@ -166,14 +172,22 @@ const ProposalAndPostForm = ({ onClose, dictionary }: { onClose?: () => void; di
                     {categories?.map((category) => (
                       <SelectItem
                         key={category?.uuid}
-                        value={category?.en_name}
+                        value={category?.uuid}
                       >
-                        {category?.en_name}
+                        {category?.[`${lang}_name` as keyof ServiceProposalCategory]}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
+              <div className="mb-6">
+                  <Label htmlFor="whatsapp">{common.contact}</Label>
+                  <Input
+                    id="whatsapp"
+                    {...register("whatsapp")}
+                    placeholder={`${common.contact_number} (optional)`}
+                  />
+                </div>
 
               {/* <div className="mb-3">
                 <Label htmlFor="requirements">Requirements</Label>

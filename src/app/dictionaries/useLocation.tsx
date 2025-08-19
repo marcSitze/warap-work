@@ -18,7 +18,8 @@ const useLocation = () => {
   return {
     isFrench,
     currentPath,
-    localizeUrl
+    localizeUrl,
+    lang: isFrench ? 'fr' : 'en',
   }
 }
 

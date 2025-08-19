@@ -19,7 +19,7 @@ import {
 import { Pagination } from "../components/Pagination/Pagination";
 import { getDictionary, LocaleType } from "../dictionaries";
 import useLocation from "../dictionaries/useLocation";
-import { ServiceRequest } from "../types/services";
+import { ServiceProposalCategory, ServiceRequest } from "../types/services";
 import formatAmount from "../utils/formatAmount";
 import JobPostItemSkeleton from "../components/JobPostItem/JobPostItemSkeleton";
 import { useLoader } from "../contexts/loader/LoaderProvider";
@@ -39,6 +39,7 @@ export default function LandingPage({
     sort,
     category_uuid: category,
   });
+  const { lang } = useLocation();
   const { start } = useLoader();
   const { data: categories } = useGetServiceCategories();
   const [searchText, setSearchText] = useState("");
@@ -81,7 +82,7 @@ export default function LandingPage({
                   </SelectItem>
                   {categories?.map((category) => (
                     <SelectItem key={category?.uuid} value={category?.uuid}>
-                      {category["en_name"]}
+                      {category?.[`${lang}_name` as keyof ServiceProposalCategory]}
                     </SelectItem>
                   ))}
                   {/* <SelectItem value="gardening">Gardening</SelectItem>
