@@ -1,7 +1,10 @@
 "use client";
 
 import { useGetServiceRequest } from "@/app/api/hooks/queries";
+import JobDetailsPageSkeleton from "@/app/components/JobDetailsPage/JobDetailsPageSkeleton";
 import { getDictionary } from "@/app/dictionaries";
+import useLocation from "@/app/dictionaries/useLocation";
+import formatAmount from "@/app/utils/formatAmount";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import {
   ArrowLeft,
@@ -19,6 +23,7 @@ import {
   CheckCircle,
   CircleAlert,
   Clock,
+  Copy,
   MapPin,
   Share2
 } from "lucide-react";
@@ -26,9 +31,9 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import ReactMarkdown from 'react-markdown';
 import whatsappIcon from "../../../../../public/whatsapp.png";
-import formatAmount from "@/app/utils/formatAmount";
-import JobDetailsPageSkeleton from "@/app/components/JobDetailsPage/JobDetailsPageSkeleton";
+import { toast } from 'react-toastify';
 
 // Extended mock data for a single job with more details
 // const jobDetails = {
@@ -68,11 +73,27 @@ import JobDetailsPageSkeleton from "@/app/components/JobDetailsPage/JobDetailsPa
 //   views: 27,
 // }
 
-export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>;}) {
+export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>; }) {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
+  const { lang } = useLocation() as { lang: 'en' | 'fr' };
   const { data: job, isLoading } = useGetServiceRequest(id);
   const { common, jobDetails } = dictionary
+  const messageTemplate = {
+    "en": `Hello, I am interested in the job titled "${job?.title}" posted by ${job?.user?.first_name} at https://warap-work.vercel.app/en/jobs/${job?.uuid}. Could you please provide more details?`,
+    "fr": `Bonjour, je suis intéressé par le poste intitulé "${job?.title}" publié par ${job?.user?.first_name} sur le site https://warap-work.vercel.app/fr/jobs/${job?.uuid}. Pourriez-vous me donner plus de détails ?`,
+  }
+
+  const jobLink = `https://warap-work.vercel.app/${lang}/jobs/${job?.uuid}`;
+  const handleJobLinkToClipboard = (link: string) => {
+    navigator.clipboard.writeText(link)
+      .then(() => {
+        toast.info(common.copied_to_clipboard, { position: "bottom-center" });
+      })
+      .catch(() => {
+        toast.error(common.copy_failed, { position: "bottom-center" });
+      });
+  }
   // In a real application, you would fetch the job details based on the ID
   // const { id } = params
   // const [job, setJob] = useState(null)
@@ -169,7 +190,7 @@ export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<Ret
 
                 <div>
                   <h3 className="font-semibold mb-2">{common.description}</h3>
-                  <p className="text-muted-foreground">{job?.description}</p>
+                  <ReactMarkdown>{job?.description}</ReactMarkdown>
                 </div>
 
                 <div>
@@ -193,10 +214,22 @@ export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<Ret
 
               <CardFooter className="flex justify-between border-t pt-6">
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
+                  {/* <Button variant="outline" size="sm">
                     <Share2 className="h-4 w-4 mr-2" />
                     {common.share}
-                  </Button>
+                  </Button> */}
+                  <DropdownMenu dir="ltr">
+                    <DropdownMenuTrigger><Share2 className="h-4 w-4 mr-2" /></DropdownMenuTrigger>
+                    <DropdownMenuContent className="min-w-1 flex flex-col items-center">
+                      {/* <DropdownMenuLabel><Copy /></DropdownMenuLabel>
+                      <DropdownMenuSeparator /> */}
+                      <DropdownMenuItem onClick={() => handleJobLinkToClipboard(jobLink)}><Copy /></DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleJobLinkToClipboard(messageTemplate[lang])}><Image src={whatsappIcon} alt="whatsapp" width={26} height={26} /></DropdownMenuItem>
+                      {/* <DropdownMenuItem>Billing</DropdownMenuItem>
+                      <DropdownMenuItem>Team</DropdownMenuItem>
+                      <DropdownMenuItem>Subscription</DropdownMenuItem> */}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   {/* <Button variant="outline" size="sm">
                     <Bookmark className="h-4 w-4 mr-2" />
                     Save
@@ -221,7 +254,7 @@ export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<Ret
               </CardHeader>
               <CardContent className="flex flex-col">
                 {/* <Button className="w-full">Apply Now</Button> */}
-                <Link target="_blank" href={`https://wa.me/237${job?.socials?.whatsapp}`}>
+                <Link target="_blank" href={`https://wa.me/237${job?.socials?.whatsapp}&text=${messageTemplate[lang]}`}>
                   <Image src={whatsappIcon} alt="whatsapp" width={80} height={100} />
                 </Link>
                 {/* <p className="text-sm text-muted-foreground mt-4 text-center">
