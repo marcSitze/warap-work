@@ -6,7 +6,7 @@ import { getDictionary, LocaleType } from "../dictionaries";
 import "../globals.css";
 import Providers from "./providers";
 import { GoogleAnalytics } from '@next/third-parties/google'
-import Script from "next/script";
+// import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,14 +47,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       >
         {/* <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NH7ZPQB8"
           height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe></noscript> */}
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-8Y6FLCNPY0"></Script>
+        {/* <Script async src="https://www.googletagmanager.com/gtag/js?id=G-8Y6FLCNPY0"></Script>
         <Script id="analytics-google">
           {`window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', 'G-8Y6FLCNPY0');`}
-        </Script>
+        </Script> */}
         <Providers>
           <div className="min-h-screen bg-background">
             <Header dictionary={dictionary} />
