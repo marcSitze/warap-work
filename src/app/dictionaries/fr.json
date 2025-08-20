@@ -69,7 +69,9 @@
     "phone": "Téléphone",
     "subscribe": "Abonnez-vous",
     "contact": "Contact",
-    "contact_number": "Numero a contacter"
+    "contact_number": "Numero a contacter",
+    "copied_to_clipboard": "Copié dans le presse-papiers",
+    "copy_failed": "Copié dans le presse-papiers"
   },
   "profile": {
     "manage_your_account": "Gérer votre compte",

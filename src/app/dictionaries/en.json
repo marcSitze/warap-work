@@ -69,7 +69,9 @@
     "phone": "Phone",
     "subscribe": "Subscribe",
     "contact": "Contact",
-    "contact_number": "Contact Number"
+    "contact_number": "Contact Number",
+    "copied_to_clipboard": "Copied to clipboard",
+    "copy_failed": "Copy failed. Please try again."
   },
   "profile": {
     "manage_your_account": "Manage your account",
