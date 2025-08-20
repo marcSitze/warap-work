@@ -76,7 +76,7 @@ import { toast } from 'react-toastify';
 export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>; }) {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
-  const { lang } = useLocation() as { lang: 'en' | 'fr' };
+  const { lang } = useLocation()
   const { data: job, isLoading } = useGetServiceRequest(id);
   const { common, jobDetails } = dictionary
   const messageTemplate = {

@@ -1,5 +1,6 @@
 import { usePathname } from 'next/navigation';
 import React from 'react';
+import { LocaleType } from '.';
 
 const useLocation = () => {
   const [currentPath, setCurrentPath] = React.useState('');
@@ -19,7 +20,7 @@ const useLocation = () => {
     isFrench,
     currentPath,
     localizeUrl,
-    lang: isFrench ? 'fr' : 'en',
+    lang: isFrench ? 'fr' : 'en' as LocaleType,
   }
 }
 
