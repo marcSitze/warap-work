@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }));
+  return i18n.locales.map((locale: LocaleType) => ({ lang: locale }));
 }
 
 export default async function RootLayout(props: {
