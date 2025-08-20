@@ -2,7 +2,7 @@
 
 import { useGetServiceRequest } from "@/app/api/hooks/queries";
 import JobDetailsPageSkeleton from "@/app/components/JobDetailsPage/JobDetailsPageSkeleton";
-import { getDictionary } from "@/app/dictionaries";
+import { getDictionary, LocaleType } from "@/app/dictionaries";
 import useLocation from "@/app/dictionaries/useLocation";
 import formatAmount from "@/app/utils/formatAmount";
 import { Button } from "@/components/ui/button";
@@ -76,7 +76,7 @@ import { toast } from 'react-toastify';
 export default function JobDetailsPage({ dictionary }: { dictionary: Awaited<ReturnType<typeof getDictionary>>; }) {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
-  const { lang } = useLocation() as { lang: 'en' | 'fr' };
+  const { lang } = useLocation() as { lang: LocaleType };
   const { data: job, isLoading } = useGetServiceRequest(id);
   const { common, jobDetails } = dictionary
   const messageTemplate = {
