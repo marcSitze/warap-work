@@ -22,12 +22,9 @@ export async function generateStaticParams() {
   return i18n.locales.map((locale: LocaleType) => ({ lang: locale }));
 }
 
-export default async function RootLayout(props: {
-  children: React.ReactNode;
-  params: Promise<{ lang: LocaleType }>;
-}) {
+export default async function RootLayout(props: LayoutProps<"/[lang]">) {
   const params = await props.params;
-  const dictionary = await getDictionary(params.lang);
+  const dictionary = await getDictionary(params.lang as LocaleType);
   const { children } = props;
 
   return (
