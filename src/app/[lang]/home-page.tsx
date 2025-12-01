@@ -134,7 +134,7 @@ export default function LandingPage({
           </Select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {isServiceLoading
             ? Array.from({ length: 10 }, (_, idx) => (
                 <JobPostItemSkeleton key={idx} />
@@ -162,12 +162,12 @@ export default function LandingPage({
             </Button>
           </div>
         )} */}
-        <Pagination
+        {(data?.total || 0) > 10 && <Pagination
           page={page}
           onPageChange={(page: number) => setPage(page)}
           total={data?.total || 0}
           hasMore={data?.more || false}
-        />
+        />}
       </section>
     </main>
   );
